@@ -138,7 +138,7 @@ describe('UC201 Registreren als nieuwe user', () => {
 
             // Use the connection
             connection.query(
-                CLEAR_DB + INSERT_USER,
+                CLEAR_DB + INSERT_USER + INSERT_USER2,
                 function (error, results, fields) {
                     // When done with the connection, release it.
                     connection.release()
@@ -238,7 +238,7 @@ describe('UC201 Registreren als nieuwe user', () => {
                 firstName: 'New',
                 lastName: 'User',
                 password: 'Secret1234',
-                emailAdress: 'name@server.nl', // Existing email address
+                emailAdress: 'name2@server.nl', // Existing email address
                 phoneNumber: '05ddd'
             })
             .end((err, res) => {
