@@ -265,7 +265,7 @@ describe('UC201 Registreren als nieuwe user', () => {
                 firstName: 'Mark',
                 lastName: 'Van Dam',
                 emailAdress: 'mvd.vandam@server.b.c.d.nl',
-                password: 'secret',
+                password: 'Secret12',
                 isActive: 1,
                 street: 'Lovensdijkstraat',
                 city: 'Breda',
