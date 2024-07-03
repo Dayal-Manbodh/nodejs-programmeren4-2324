@@ -56,6 +56,13 @@ jobs:
               with:
                   name: node-app
 
+            - name: Debug DB Connection Settings
+              run: |
+                  echo "DB_HOST: $DB_HOST"
+                  echo "DB_PORT: $DB_PORT"
+                  echo "DB_USER: $DB_USER"
+                  # Add more variables as needed
+
             - name: Unzip artifact for tests
               run: unzip release.zip
 
