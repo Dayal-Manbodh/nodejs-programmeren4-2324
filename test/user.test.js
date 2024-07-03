@@ -279,8 +279,8 @@ describe('UC201 Registreren als nieuwe user', () => {
                 res.body.should.have.property('message').that.is.a('string')
 
                 const data = res.body.data
-                data.should.have.property('firstName').equals('dayal')
-                data.should.have.property('lastName').equals('last')
+                data.should.have.property('firstName').equals('Mark')
+                data.should.have.property('lastName').equals('Van Dam')
                 data.should.have.property('emailAdress')
                 data.should.have.property('id').that.is.a('number')
 
