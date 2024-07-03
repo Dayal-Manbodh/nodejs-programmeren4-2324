@@ -4,6 +4,7 @@ const chai = require('chai')
 const chaiHttp = require('chai-http')
 const server = require('../index')
 const expect = chai.expect
+const assert = require('assert')
 const db = require('../src/dao/mysql-db')
 const logger = require('../src/util/logger')
 const jwt = require('jsonwebtoken')
@@ -242,6 +243,7 @@ describe('UC201 Registreren als nieuwe user', () => {
                 phoneNumber: '05ddd'
             })
             .end((err, res) => {
+                assert.ifError(err)
                 chai.expect(res).to.have.status(403)
                 chai.expect(res.body).to.be.a('object')
                 chai.expect(res.body).to.have.property('status').equals(403)
