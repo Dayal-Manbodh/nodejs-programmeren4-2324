@@ -258,34 +258,33 @@ describe('UC201 Registreren als nieuwe user', () => {
     //         })
     // })
 
-    // it('TC-201-5 Gebruiker succesvol geregistreerd', (done) => {
-    //     chai.request(server)
-    //         .post(endpointToTest)
-    //         .send({
-    //             firstName: 'dayal',
-    //             lastName: 'last',
-    //             password: 'Secret12',
-    //             emailAdress: 'dayal@gmail.com',
-    //             phoneNumber: '0615976482',
-    //             isActive: 1,
-    //             roles: 'editor'
-    //         })
-    //         .end((err, res) => {
-    //             res.should.have.status(200)
-    //             res.body.should.be.a('object')
+    it('TC-201-5 Gebruiker succesvol geregistreerd', (done) => {
+        chai.request(server)
+            .post(endpointToTest)
+            .send({
+                firstName: 'dayal',
+                lastName: 'last',
+                password: 'Secret12',
+                emailAdress: 'dayal@gmail.com',
+                phoneNumber: '0615976482',
+                isActive: 1
+            })
+            .end((err, res) => {
+                res.should.have.status(200)
+                res.body.should.be.a('object')
 
-    //             res.body.should.have.property('data').that.is.a('object')
-    //             res.body.should.have.property('message').that.is.a('string')
+                res.body.should.have.property('data').that.is.a('object')
+                res.body.should.have.property('message').that.is.a('string')
 
-    //             const data = res.body.data
-    //             data.should.have.property('firstName').equals('dayal')
-    //             data.should.have.property('lastName').equals('last')
-    //             data.should.have.property('emailAdress')
-    //             data.should.have.property('id').that.is.a('number')
+                const data = res.body.data
+                data.should.have.property('firstName').equals('dayal')
+                data.should.have.property('lastName').equals('last')
+                data.should.have.property('emailAdress')
+                data.should.have.property('id').that.is.a('number')
 
-    //             done()
-    //         })
-    // })
+                done()
+            })
+    })
 })
 
 describe('UC-202 Opvragen van overzicht van users', () => {
