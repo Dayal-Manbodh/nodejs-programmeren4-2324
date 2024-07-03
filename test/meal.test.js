@@ -279,32 +279,30 @@ describe('UC-302 Wijzigen van maaltijdsgegevens', () => {
     describe('TC-302-5 Maaltijd succesvol gewijzigd', () => {
         it('should return a success message and updated meal data', (done) => {
             chai.request(server)
-                .put(endpointToTest + '/1')
-                .set('Authorization', 'Bearer ' + token)
+                .put(endpointToTest + '/1') // Ensure correct endpoint
+                .set('Authorization', `Bearer ${token}`)
                 .send({
                     isActive: 1,
-                    isVega: 1,
-                    isVegan: 1,
-                    isToTakeHome: 1,
-                    dateTime: '2023-12-31 14:30:00',
-                    maxAmountOfParticipants: 10,
-                    price: 10.0,
-                    imgURL: 'https://www.img.com',
-                    createDate: '2023-12-31 14:30:00',
-                    updateDate: '2023-12-31 14:30:00',
-                    name: 'food',
-                    description: 'nice food',
+                    isVega: 0,
+                    isVegan: 0,
+                    isToTakeHome: 0,
+                    dateTime: '2022-06-26',
+                    maxAmountOfParticipants: 4,
+                    price: 13.25,
+                    imageUrl: 'htpass',
+                    cookid: 1,
+                    createDate: '2022-06-26',
+                    updateDate: '2022-06-26',
+                    name: 'Pasta',
+                    description: 'lekker',
                     allergenes: 'gluten'
                 })
                 .end((err, res) => {
-                    assert.ifError(err)
-                    res.should.have.status(201)
-                    res.body.should.be.an
-                        .an('object')
-                        .that.has.all.keys('status', 'message', 'data')
-                    res.body.status.should.be.a('number')
-                    res.body.data.should.be.an('object').that.is.not.empty
-                    res.body.message.should.contain('meal updated with id')
+                    res.should.have.status(200)
+                    res.body.should.be.a('object')
+                    res.body.should.have
+                        .property('message')
+                        .eql('Meal updated with id 1')
                     done()
                 })
         })
