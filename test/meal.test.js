@@ -276,29 +276,29 @@ describe('UC-302 Wijzigen van maaltijdsgegevens', () => {
         })
     })
 
-    // describe('TC-302-5 Maaltijd succesvol gewijzigd', () => {
-    //     it('should return a success message and updated meal data', (done) => {
-    //         chai.request(server)
-    //             .put(endpointToTest + '/1') // Ensure correct endpoint
-    //             .set('Authorization', `Bearer ${token}`)
-    //             .send({
-    //                 name: 'Spaghetti',
-    //                 price: 14.5,
-    //                 maxAmountOfParticipants: 5,
-    //                 dateTime: '2022-07-26',
-    //                 description: 'Lekker Spaghetti',
-    //                 allergenes: 'gluten, soja'
-    //             })
-    //             .end((err, res) => {
-    //                 res.should.have.status(200)
-    //                 res.body.should.be.a('object')
-    //                 res.body.should.have
-    //                     .property('message')
-    //                     .eql('Meal updated with id 1')
-    //                 done()
-    //             })
-    //     })
-    // })
+    describe('TC-302-5 Maaltijd succesvol gewijzigd', () => {
+        it('should return a success message and updated meal data', (done) => {
+            chai.request(server)
+                .put(endpointToTest + '/1') // Ensure correct endpoint
+                .set('Authorization', `Bearer ${token}`)
+                .send({
+                    name: 'Spaghetti',
+                    price: 14.5,
+                    maxAmountOfParticipants: 5,
+                    dateTime: '2022-07-26',
+                    description: 'Lekker Spaghetti',
+                    allergenes: 'gluten, soja'
+                })
+                .end((err, res) => {
+                    res.should.have.status(200)
+                    res.body.should.be.a('object')
+                    res.body.should.have
+                        .property('message')
+                        .eql('Meal updated with id 1')
+                    done()
+                })
+        })
+    })
 })
 
 describe('UC-303 Opvragen van alle maaltijden', () => {
