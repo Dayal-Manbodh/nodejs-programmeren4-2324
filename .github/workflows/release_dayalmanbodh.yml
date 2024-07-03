@@ -42,9 +42,9 @@ jobs:
             MYSQL_ROOT_PASSWORD: root
             DB_HOST: 127.0.0.1
             DB_PORT: 3306
-            DB_NAME: share_a_meal
+            DB_NAME: share-a-meal
             DB_USER: root
-            DB_PASSWORD: root
+            DB_PASSWORD:
             JWT_KEY: supersecretkey
 
         steps:
