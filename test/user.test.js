@@ -232,31 +232,34 @@ describe('UC201 Registreren als nieuwe user', () => {
             })
     })
 
-    // it('TC-201-4 Gebruiker bestaat al', (done) => {
-    //     chai.request(server)
-    //         .post(endpointToTest)
-    //         .send({
-    //             firstName: 'New',
-    //             lastName: 'User',
-    //             password: 'Secret1234',
-    //             emailAdress: 'name@server.nl', // Existing email address
-    //             phoneNumber: '05ddd'
-    //         })
-    //         .end((err, res) => {
-    //             assert.ifError(err)
-    //             chai.expect(res).to.have.status(403)
-    //             chai.expect(res.body).to.be.a('object')
-    //             chai.expect(res.body).to.have.property('status').equals(403)
-    //             chai.expect(res.body)
-    //                 .to.have.property('message')
-    //                 .equals('User with this email address already exists')
-    //             chai.expect(res.body.data).to.be.empty
+    it('TC-201-4 Gebruiker bestaat al', (done) => {
+        chai.request(server)
+            .post(endpointToTest)
+            .send({
+                firstName: 'Mark',
+                lastName: 'Van Dam',
+                emailAdress: 'name@server.nl',
+                password: 'Secret12',
+                isActive: 1,
+                street: 'Lovensdijkstraat',
+                city: 'Breda',
+                phoneNumber: '0625897745'
+            })
+            .end((err, res) => {
+                assert.ifError(err)
+                chai.expect(res).to.have.status(403)
+                chai.expect(res.body).to.be.a('object')
+                chai.expect(res.body).to.have.property('status').equals(403)
+                chai.expect(res.body)
+                    .to.have.property('message')
+                    .equals('User with this email address already exists')
+                chai.expect(res.body.data).to.be.empty
 
-    //             // Check that the user is not added to the system
-    //             // You can use a separate function to check the database or API
-    //             done()
-    //         })
-    // })
+                // Check that the user is not added to the system
+                // You can use a separate function to check the database or API
+                done()
+            })
+    })
 
     it('TC-201-5 Gebruiker succesvol geregistreerd', (done) => {
         chai.request(server)
