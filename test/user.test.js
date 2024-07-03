@@ -239,7 +239,7 @@ describe('UC201 Registreren als nieuwe user', () => {
     //             firstName: 'New',
     //             lastName: 'User',
     //             password: 'Secret1234',
-    //             emailAdress: 'name2@server.nl', // Existing email address
+    //             emailAdress: 'name@server.nl', // Existing email address
     //             phoneNumber: '05ddd'
     //         })
     //         .end((err, res) => {
@@ -697,32 +697,31 @@ describe('UC-205 Updaten van usergegevens', () => {
         })
     })
 
-    // describe('TC-205-6 Gebruiker succesvol gewijzigd', () => {
-    //     it('should update the user', (done) => {
-    //         chai.request(server)
-    //             .put(endpointToTest + '/1') // Ensure correct endpoint
-    //             .set('Authorization', `Bearer ${token}`)
-    //             .send({
-    //                 firstName: 'Mark',
-    //                 lastName: 'Van Dam',
-    //                 emailAdress: 'mvd.vandam@server.b.c.d.nl',
-    //                 password: 'secret',
-    //                 isActive: 'false',
-    //                 street: 'Lovensdijkstraat',
-    //                 city: 'Breda',
-    //                 phoneNumber: '06 25897745',
-    //                 roles: 'editor,guest'
-    //             })
-    //             .end((err, res) => {
-    //                 res.should.have.status(200)
-    //                 res.body.should.be.a('object')
-    //                 res.body.should.have
-    //                     .property('message')
-    //                     .eql('User updated with id 1.')
-    //                 done()
-    //             })
-    //     })
-    // })
+    describe('TC-205-6 Gebruiker succesvol gewijzigd', () => {
+        it('should update the user', (done) => {
+            chai.request(server)
+                .put(endpointToTest + '/1') // Ensure correct endpoint
+                .set('Authorization', `Bearer ${token}`)
+                .send({
+                    firstName: 'Mark',
+                    lastName: 'Van Dam',
+                    emailAdress: 'mvd.vandam@server.b.c.d.nl',
+                    password: 'secret',
+                    isActive: 1,
+                    street: 'Lovensdijkstraat',
+                    city: 'Breda',
+                    phoneNumber: '0625897745'
+                })
+                .end((err, res) => {
+                    res.should.have.status(200)
+                    res.body.should.be.a('object')
+                    res.body.should.have
+                        .property('message')
+                        .eql('User updated with id 1.')
+                    done()
+                })
+        })
+    })
 })
 
 describe('UC-206 Verwijderen van user', () => {
