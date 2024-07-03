@@ -235,13 +235,11 @@ describe('UC201 Registreren als nieuwe user', () => {
         chai.request(server)
             .post(endpointToTest)
             .send({
-                firstName: 'first',
-                lastName: 'last',
+                firstName: 'New',
+                lastName: 'User',
+                password: 'Secret1234',
                 emailAdress: 'name@server.nl', // Existing email address
-                isActive: 1,
-                password: 'secret',
-                phoneNumber: '0612547896',
-                roles: 'editor'
+                phoneNumber: '05ddd'
             })
             .end((err, res) => {
                 chai.expect(res).to.have.status(403)
@@ -264,11 +262,9 @@ describe('UC201 Registreren als nieuwe user', () => {
             .send({
                 firstName: 'dayal',
                 lastName: 'last',
+                password: 'Secret12',
                 emailAdress: 'dayal@gmail.com',
-                isActive: 1,
-                password: 'secret',
-                phoneNumber: '0615976482',
-                roles: 'editor'
+                phoneNumber: '0615976482'
             })
             .end((err, res) => {
                 res.should.have.status(200)
@@ -278,8 +274,8 @@ describe('UC201 Registreren als nieuwe user', () => {
                 res.body.should.have.property('message').that.is.a('string')
 
                 const data = res.body.data
-                data.should.have.property('firstName').equals('Voornaam')
-                data.should.have.property('lastName').equals('Achternaam')
+                data.should.have.property('firstName').equals('dayal')
+                data.should.have.property('lastName').equals('last')
                 data.should.have.property('emailAdress')
                 data.should.have.property('id').that.is.a('number')
 
