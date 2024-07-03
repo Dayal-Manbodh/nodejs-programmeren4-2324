@@ -131,8 +131,26 @@ describe('UC201 Registreren als nieuwe user', () => {
      * Hiermee kun je code hergebruiken of initialiseren.
      */
     beforeEach((done) => {
-        console.log('Before each test')
-        done()
+        logger.debug('beforeEach called')
+        // maak de testdatabase leeg zodat we onze testen kunnen uitvoeren.
+        db.getConnection(function (err, connection) {
+            if (err) throw err // not connected!
+
+            // Use the connection
+            connection.query(
+                CLEAR_DB + INSERT_USER,
+                function (error, results, fields) {
+                    // When done with the connection, release it.
+                    connection.release()
+
+                    // Handle error after the release.
+                    if (error) throw error
+                    // Let op dat je done() pas aanroept als de query callback eindigt!
+                    logger.debug('beforeEach done')
+                    done()
+                }
+            )
+        })
     })
 
     /**
@@ -217,10 +235,13 @@ describe('UC201 Registreren als nieuwe user', () => {
         chai.request(server)
             .post(endpointToTest)
             .send({
-                firstName: 'Voornaam',
-                lastName: 'Achternaam',
+                firstName: 'first',
+                lastName: 'last',
                 emailAdress: 'name@server.nl', // Existing email address
-                password: 'secret'
+                isActive: 1,
+                password: 'secret',
+                phoneNumber: '0612547896',
+                roles: 'editor'
             })
             .end((err, res) => {
                 chai.expect(res).to.have.status(403)
@@ -241,10 +262,13 @@ describe('UC201 Registreren als nieuwe user', () => {
         chai.request(server)
             .post(endpointToTest)
             .send({
-                firstName: 'Voornaam',
-                lastName: 'Achternaam',
-                emailAdress: 'dayal@server.nl',
-                password: 'Secret12'
+                firstName: 'dayal',
+                lastName: 'last',
+                emailAdress: 'dayal@gmail.com',
+                isActive: 1,
+                password: 'secret',
+                phoneNumber: '0615976482',
+                roles: 'editor'
             })
             .end((err, res) => {
                 res.should.have.status(200)
