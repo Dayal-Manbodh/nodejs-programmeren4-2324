@@ -262,12 +262,14 @@ describe('UC201 Registreren als nieuwe user', () => {
         chai.request(server)
             .post(endpointToTest)
             .send({
-                firstName: 'dayal',
-                lastName: 'last',
-                password: 'Secret12',
-                emailAdress: 'dayal@gmail.com',
-                phoneNumber: '0615976482',
-                isActive: 1
+                firstName: 'Mark',
+                lastName: 'Van Dam',
+                emailAdress: 'mvd.vandam@server.b.c.d.nl',
+                password: 'secret',
+                isActive: 1,
+                street: 'Lovensdijkstraat',
+                city: 'Breda',
+                phoneNumber: '0625897745'
             })
             .end((err, res) => {
                 res.should.have.status(200)
