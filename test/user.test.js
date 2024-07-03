@@ -266,7 +266,9 @@ describe('UC201 Registreren als nieuwe user', () => {
                 lastName: 'last',
                 password: 'Secret12',
                 emailAdress: 'dayal@gmail.com',
-                phoneNumber: '0615976482'
+                phoneNumber: '0615976482',
+                isActive: 1,
+                roles: 'editor'
             })
             .end((err, res) => {
                 res.should.have.status(200)
