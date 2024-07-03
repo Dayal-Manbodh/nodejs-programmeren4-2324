@@ -39,18 +39,14 @@ jobs:
         runs-on: ubuntu-latest
         needs: build
         env:
-            MYSQL_ROOT_PASSWORD: root # default root password to use must be 'root'
+            MYSQL_ROOT_PASSWORD: root
             DB_HOST: 127.0.0.1
             DB_PORT: 3306
             DB_NAME: share_a_meal
             DB_USER: root
             DB_PASSWORD: root
             JWT_KEY: supersecretkey
-        services:
-            mysql:
-                image: mysql:5.7
-                ports:
-                    - 3306
+
         steps:
             - name: Download artifact from build job
               uses: actions/download-artifact@v3
@@ -60,19 +56,28 @@ jobs:
             - name: Unzip artifact for tests
               run: unzip release.zip
 
-            - name: Start MySQL connection from host
-              run: |
-                  sudo /etc/init.d/mysql start
-                  sudo apt-get install -y mysql-client
-                  mysql -h 127.0.0.1 -uroot -p${{ env.MYSQL_ROOT_PASSWORD }} -e "SHOW DATABASES;"
-                  mysql -h 127.0.0.1 -uroot -p${{ env.MYSQL_ROOT_PASSWORD }} -e "CREATE DATABASE ${{env.DB_NAME}};"
+            - name: Install MySQL client
+              run: sudo apt-get install -y mysql-client
 
-            - name: Import the database
-              run: |
-                  mysql -uroot -p${{env.MYSQL_ROOT_PASSWORD}} ${{env.DB_NAME}} < share-a-meal.sql
-                  mysql -uroot -p${{env.MYSQL_ROOT_PASSWORD}} ${{env.DB_NAME}} -e "SHOW TABLES;"
+            - name: Start MySQL service
+              run: sudo systemctl start mysql
 
-            - name: npm test
+            - name: Wait for MySQL to start
+              run: sudo systemctl status mysql --no-pager
+
+            - name: Create MySQL database
+              run: |
+                  mysql -h 127.0.0.1 -uroot -p${{ env.MYSQL_ROOT_PASSWORD }} -e "CREATE DATABASE IF NOT EXISTS ${{ env.DB_NAME }};"
+
+            - name: Import MySQL schema and data
+              run: |
+                  mysql -h 127.0.0.1 -uroot -p${{ env.MYSQL_ROOT_PASSWORD }} ${{ env.DB_NAME }} < share-a-meal.sql
+
+            - name: Show MySQL tables
+              run: |
+                  mysql -h 127.0.0.1 -uroot -p${{ env.MYSQL_ROOT_PASSWORD }} ${{ env.DB_NAME }} -e "SHOW TABLES;"
+
+            - name: Run npm test
               run: |
                   npm test -- --DB_PASSWORD $MYSQL_ROOT_PASSWORD --DB_USER root --DB_NAME $DB_NAME --DB_PORT $DB_PORT
 
